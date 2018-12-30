@@ -46,13 +46,12 @@ public class Pendigits {
         Nd4j.ENFORCE_NUMERICAL_STABILITY = true;
         int batchSize = 50;
         int seed = 123;
-        double learningRate = 0.01;
+        double learningRate = 0.1;
         //Number of epochs (full passes of the data)
         int nEpochs = 1000;
 
-        int numInputs = 2;
-        int numOutputs = 2;
-        int numHiddenNodes = 33;
+
+        int numHiddenNodes = 32;
 
         final String filenameTrain  = new ClassPathResource("pendigits.tra").getFile().getPath();
         final String filenameTest  = new ClassPathResource("pendigits.tes").getFile().getPath();
@@ -78,7 +77,7 @@ public class Pendigits {
 //        Train: 0.9890579129970644
 //        Test : 0.9579759862778731
         
-        float rate = 0.98f;
+        float rate = 1.0f;
         
         
         //log.info("Build model....");
@@ -90,15 +89,11 @@ public class Pendigits {
                         .weightInit(WeightInit.XAVIER)
                         .activation(Activation.RELU)
                         .build())
-                .layer(1, new DenseLayer.Builder().nIn(numHiddenNodes).nOut(numHiddenNodes).dropOut(rate)
-                        .weightInit(WeightInit.XAVIER)
-                        .activation(Activation.RELU)
-                        .build())
-                .layer(2, new DenseLayer.Builder().nIn(numHiddenNodes).nOut(numHiddenNodes).dropOut(rate)
-                        .weightInit(WeightInit.XAVIER)
-                        .activation(Activation.RELU)
-                        .build())
-                .layer(3, new OutputLayer.Builder(LossFunction.NEGATIVELOGLIKELIHOOD)
+//                .layer(1, new DenseLayer.Builder().nIn(numHiddenNodes).nOut(numHiddenNodes).dropOut(rate)
+//                        .weightInit(WeightInit.XAVIER)
+//                        .activation(Activation.RELU)
+//                        .build())
+                .layer(1, new OutputLayer.Builder(LossFunction.NEGATIVELOGLIKELIHOOD)
                         .weightInit(WeightInit.XAVIER)
                         .activation(Activation.SOFTMAX)
                         .nIn(numHiddenNodes).nOut(10).build())
